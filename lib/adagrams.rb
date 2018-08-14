@@ -39,3 +39,15 @@ def draw_letters
   return pool_of_letters.sample(10)
 
 end
+
+def uses_available_letters?(input, letters_in_hand)
+  input_array = input.upcase.chars
+  input_array.each do |letter|
+    if letters_in_hand.include? letter
+      letters_in_hand.delete_at(letters_in_hand.index(letter))
+    else
+      return false
+    end
+  end
+  return true
+end
