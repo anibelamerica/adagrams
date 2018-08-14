@@ -84,3 +84,47 @@ def score_word(word)
   return score
 
 end
+
+def highest_score_from(words)
+
+  # best_score = 0
+  # best_words = []
+
+  best_word = {
+    word: [],
+    score: 0
+  }
+
+  words.each do |word|
+
+    score = score_word(word)
+    if score > best_word[:score]
+      best_word[:word].clear
+      best_word[:word] << word
+      best_word[:score] = score
+    end
+
+    if score == best_word[:score]
+      best_word[:word] << word
+    end
+
+  end
+
+  # insert some tie-breaker code here
+  best_by_length = best_word[:word].min_by do |word|
+    word.length
+  end
+
+  best_by_10 = best_word[:word].select do |word|
+    word.length == 10
+  end
+
+  if best_by_10.empty?
+    best_word[:word] = best_by_length
+  else
+    best_word[:word] = best_by_10[0]
+  end
+
+  return best_word
+
+end
