@@ -1,3 +1,4 @@
+# returns an array of 10 letters
 def draw_letters
   letter_frequencies =
   {
@@ -30,48 +31,59 @@ def draw_letters
   }
 
   pool_of_letters = []
+
   letter_frequencies.each do |letter, freq|
+
     freq.times do
       pool_of_letters << letter
     end
+
   end
 
   return pool_of_letters.sample(10)
 
 end
 
+# boolean method that verifies if input is valid
 def uses_available_letters?(input, letters_in_hand)
+
   input_array = input.upcase.chars
+
   input_array.each do |letter|
+
     if letters_in_hand.include? letter
-      letters_in_hand.delete_at(letters_in_hand.index(letter))
+      index = letters_in_hand.index(letter)
+      letters_in_hand.delete_at(index)
     else
       return false
     end
+
   end
+
   return true
 end
 
+# returns word score based on letter value and word length
 def score_word(word)
 
   score = 0
 
-  word.downcase.each_char do |letter|
+  word.upcase.each_char do |letter|
 
     case letter
-    when "a", "e", "i", "o", "u", "l", "n", "r", "s", "t"
+    when "A", "E", "I", "O", "U", "L", "N", "R", "S", "T"
       score += 1
-    when "d", "g"
+    when "D", "G"
       score += 2
-    when "b", "c", "m", "p"
+    when "B", "C", "M", "P"
       score += 3
-    when "f", "h", "v", "w", "y"
+    when "F", "H", "V", "W", "Y"
       score += 4
-    when "k"
+    when "K"
       score += 5
-    when "j", "x"
+    when "J", "X"
       score += 8
-    when "q", "z"
+    when "Q", "Z"
       score += 10
     end
 
@@ -85,10 +97,9 @@ def score_word(word)
 
 end
 
+# returns hash of highest scoring word and its score
+# applies rules for breaking ties
 def highest_score_from(words)
-
-  # best_score = 0
-  # best_words = []
 
   best_word = {
     word: [],
@@ -98,6 +109,7 @@ def highest_score_from(words)
   words.each do |word|
 
     score = score_word(word)
+
     if score > best_word[:score]
       best_word[:word].clear
       best_word[:word] << word
@@ -110,19 +122,21 @@ def highest_score_from(words)
 
   end
 
-  # insert some tie-breaker code here
-  best_by_length = best_word[:word].min_by do |word|
+  # applies rules for ties:
+  # - shortest word wins unless there is a 10 letter word
+  # - if multiple 10 letter words, the first word wins
+  shortest_word = best_word[:word].min_by do |word|
     word.length
   end
 
-  best_by_10 = best_word[:word].select do |word|
+  all_tiles_words = best_word[:word].select do |word|
     word.length == 10
   end
 
-  if best_by_10.empty?
-    best_word[:word] = best_by_length
+  if all_tiles_words.empty?
+    best_word[:word] = shortest_word
   else
-    best_word[:word] = best_by_10[0]
+    best_word[:word] = all_tiles_words[0]
   end
 
   return best_word
