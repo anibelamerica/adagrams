@@ -1,3 +1,6 @@
+require 'csv'
+# require_relative '../assets/dictionary-english.csv'
+
 # returns an array of 10 letters
 def draw_letters
   letter_frequencies =
@@ -140,5 +143,19 @@ def highest_score_from(words)
   end
 
   return best_word
+
+end
+
+def is_in_english_dict?(input)
+
+  CSV.read('/Users/anibelamerica/ada/unit-1/02-week/dev/adagrams/adagrams/assets/dictionary-english.csv', headers: true).each do |word|
+
+    if input.downcase == word[0]
+      return true
+    end
+
+  end
+
+  return false
 
 end
