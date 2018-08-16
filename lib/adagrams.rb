@@ -51,18 +51,16 @@ def uses_available_letters?(input, letters_in_hand)
 
   input_array = input.upcase.chars
 
-  input_array.each do |letter|
+  letters_in_hand.each do |letter|
 
-    if letters_in_hand.include? letter
-      index = letters_in_hand.index(letter)
-      letters_in_hand.delete_at(index)
-    else
-      return false
+    if input_array.include? letter
+      index = input_array.index(letter)
+      input_array.delete_at(index)
     end
-
   end
 
-  return true
+  return input_array.length == 0
+
 end
 
 # returns word score based on letter value and word length
