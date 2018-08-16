@@ -168,4 +168,35 @@ describe 'Adagrams' do
       expect(best_word[:score]).must_equal 18
     end
   end
+
+  describe 'is_in_english_dict? method' do
+    it 'returns true if submitted word is in game dictionary' do
+      word = 'aardvark'
+
+      is_valid = is_in_english_dict?(word)
+
+      expect(is_valid).must_equal true
+    end
+
+    it 'returns true if submitted word is in game dictionary - case insensitive' do
+      word = 'AARDVARK'
+
+      is_valid = is_in_english_dict?(word)
+
+      expect(is_valid).must_equal true
+    end
+
+    it 'returns false if submitted word is not in game dictionary' do
+
+      expect(is_in_english_dict?('niugfdfl')).must_equal false
+      expect(is_in_english_dict?('hippopotamus')).must_equal false
+      expect(is_in_english_dict?('#&*123')).must_equal false
+
+    end
+
+    it 'returns false if given empty input' do
+      expect(is_in_english_dict?('')).must_equal false
+    end
+
+  end
 end
