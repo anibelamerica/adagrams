@@ -46,7 +46,8 @@ def draw_letters
 
 end
 
-# boolean method that verifies if input is valid
+
+# Boolean method that verifies input is valid
 def uses_available_letters?(input, letters_in_hand)
 
   input_array = input.upcase.chars
@@ -62,6 +63,7 @@ def uses_available_letters?(input, letters_in_hand)
   return input_array.length == 0
 
 end
+
 
 # returns word score based on letter value and word length
 def score_word(word)
@@ -96,6 +98,7 @@ def score_word(word)
   return score
 
 end
+
 
 # returns hash of highest scoring word and its score
 # applies rules for breaking ties
@@ -143,6 +146,8 @@ def highest_score_from(words)
 
 end
 
+
+# Boolean method that verifies word is in game dictionary
 def is_in_english_dict?(input)
 
   CSV.read('assets/dictionary-english.csv', headers: true).each do |word|
